@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin MI KBC - KMA 1503</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 pb-20">
+    <!-- Iklan Atas -->
+    <div class="text-center p-2 bg-white border-b text-[10px] text-gray-400">
+        ADVERTISEMENT <br>
+        <div id="at-top">/* PASTE KODE ADSTERRA BANNER 728x90 DI SINI */</div>
+    </div>
+
+    <div class="max-w-4xl mx-auto p-6 bg-white shadow-xl rounded-b-2xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-extrabold text-green-700">Admin Madrasah MI AI</h1>
+            <p class="text-gray-500 italic">Generator Otomatis Kurikulum Berbasis Cinta (KMA 1503/2025)</p>
+        </header>
+
+        <!-- Shortcut Bar -->
+        <div class="flex gap-4 mb-8 justify-center">
+            <a href="URL_APP_KOKURIKULER" class="px-4 py-2 bg-pink-50 text-pink-600 border border-pink-200 rounded-full text-xs font-bold hover:bg-pink-100">
+                🚀 Shortcut: App Kokurikuler (P5-PPRA)
+            </a>
+        </div>
+
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <input type="text" id="madrasah" placeholder="Nama Madrasah" class="p-3 border rounded-lg">
+                <input type="text" id="nama_guru" placeholder="Nama Guru" class="p-3 border rounded-lg">
+                <input type="text" id="mapel" placeholder="Mata Pelajaran" class="p-3 border rounded-lg">
+                <select id="pilihan_durasi" class="p-3 border rounded-lg">
+                    <option value="1">Hanya 1 Semester (Ganjil)</option>
+                    <option value="2">Hanya 1 Semester (Genap)</option>
+                    <option value="Tahun">Full 1 Tahun Ajaran</option>
+                </select>
+            </div>
+            <textarea id="cp" placeholder="Tempel Capaian Pembelajaran (CP) dari PDF KMA ke sini..." class="w-full h-48 p-4 border rounded-lg focus:ring-2 focus:ring-green-500"></textarea>
+            
+            <button onclick="prosesAdmin()" id="btnProses" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-green-700 transition">
+                GENERATE 5 DOKUMEN SEKARANG
+            </button>
+        </div>
+
+        <!-- Hasil -->
+        <div id="hasil" class="hidden mt-10 space-y-4">
+            <h2 class="font-bold border-b pb-2">Dokumen Berhasil Dibuat:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="linkContainer"></div>
+        </div>
+    </div>
+
+    <!-- Iklan Footer (Social Bar / Native) -->
+    <div class="fixed bottom-0 w-full bg-white/90 p-2 border-t text-center shadow-2xl">
+        <div id="at-footer">/* PASTE KODE ADSTERRA NATIVE DI SINI */</div>
+    </div>
+
+    <script>
+        async function prosesAdmin() {
+            const btn = document.getElementById('btnProses');
+            btn.disabled = true;
+            btn.innerText = "Sabar, AI sedang menyusun tabel... (± 1 Menit)";
+            
+            const payload = {
+                madrasah: document.getElementById('madrasah').value,
+                nama_guru: document.getElementById('nama_guru').value,
+                mapel: document.getElementById('mapel').value,
+                pilihan_durasi: document.getElementById('pilihan_durasi').value,
+                cp: document.getElementById('cp').value,
+                tahun_ajaran: "2025/2026",
+                tempat_tanggal: "Jakarta, 10 Juli 2025"
+            };
+
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxPMrTs0xokf9hT31DBxJiq_Fi6rq8MLqYPGN2y2dV9fk-C8e9jmT4XEfkCTcj1jEI/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+                const urls = await response.json();
+                
+                const container = document.getElementById('linkContainer');
+                container.innerHTML = "";
+                for(let key in urls) {
+                    container.innerHTML += `<a href="${urls[key]}" target="_blank" class="p-3 bg-blue-50 text-blue-700 rounded border border-blue-200 font-medium">📄 Buka ${key.toUpperCase()}</a>`;
+                }
+                document.getElementById('hasil').classList.remove('hidden');
+            } catch (e) {
+                alert("Gagal! Cek konsol browser.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "GENERATE 5 DOKUMEN SEKARANG";
+            }
+        }
+    </script>
+</body>
+</html>
