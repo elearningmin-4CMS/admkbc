@@ -3,131 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin MI KBC - KMA 1503</title>
+    <title>Admin MI KBC Generator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom scrollbar agar textarea lebih cantik */
-        textarea::-webkit-scrollbar { width: 5px; }
-        textarea::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
-        body { padding-bottom: 140px; } /* Jarak agar tidak tertutup iklan footer */
+        body { padding-bottom: 150px; }
+        .input-label { font-size: 10px; font-weight: bold; color: #15803d; text-transform: uppercase; margin-bottom: 2px; display: block; }
     </style>
 </head>
 <body class="bg-slate-50">
 
-    <!-- Iklan Atas Tengah -->
-    <div class="w-full flex flex-col items-center justify-center bg-white py-2 border-b shadow-sm">
-        <span class="text-[8px] text-gray-400 mb-1 tracking-widest uppercase">Advertisement</span>
-        <div class="flex justify-center w-full overflow-hidden scale-75 md:scale-100">
+    <!-- Iklan Atas -->
+    <div class="w-full flex flex-col items-center bg-white py-2 border-b">
+        <span class="text-[8px] text-gray-400 mb-1">ADVERTISEMENT</span>
+        <div class="scale-75 md:scale-100">
             <script type="text/javascript">
-                atOptions = {
-                    'key' : '439d20ec19cea92a002688770239b3f7',
-                    'format' : 'iframe',
-                    'height' : 90,
-                    'width' : 728,
-                    'params' : {}
-                };
+                atOptions = { 'key' : '439d20ec19cea92a002688770239b3f7', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
             </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/439d20ec19cea92a002688770239b3f7/invoke.js"></script>
+            <script src="https://www.highperformanceformat.com/439d20ec19cea92a002688770239b3f7/invoke.js"></script>
         </div>
     </div>
 
-    <div class="max-w-4xl mx-auto p-4 md:p-6 bg-white shadow-xl rounded-b-2xl mb-10">
+    <div class="max-w-4xl mx-auto p-4 md:p-6 bg-white shadow-2xl rounded-b-3xl">
         <header class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-extrabold text-green-700 leading-tight">Administrasi Madrasah Ibtidaiyah</h1>
-            <p class="text-xs md:text-sm text-gray-500 italic">Generator Otomatis Kurikulum Berbasis Cinta (KMA 1503/2025)</p>
+            <h1 class="text-2xl md:text-3xl font-black text-green-700 tracking-tighter uppercase">Administrasi MI AI</h1>
+            <p class="text-[10px] text-gray-500 italic">Otomatisasi KMA 1503/2025 - Kurikulum Berbasis Cinta</p>
         </header>
 
-        <!-- Shortcut Bar -->
+        <!-- Shortcut -->
         <div class="flex justify-center mb-6">
-            <a href="URL_APP_KOKURIKULER" class="px-4 py-2 bg-pink-50 text-pink-600 border border-pink-100 rounded-full text-[10px] md:text-xs font-bold hover:bg-pink-100 transition flex items-center gap-2">
-                🚀 Shortcut: App Kokurikuler (P5-PPRA)
+            <a href="https://appkokurikuler.vercel.app" class="px-5 py-2 bg-pink-50 text-pink-600 border border-pink-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-pink-100 transition flex items-center gap-2">
+                🚀 App Kokurikuler (P5-PPRA)
             </a>
         </div>
 
-        <!-- FORM INPUT -->
         <div class="space-y-3">
-            <!-- Baris 1: Madrasah & Tahun -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
                 <div class="md:col-span-2">
-                    <label class="text-[10px] font-bold text-green-700 uppercase ml-1">Nama Madrasah</label>
-                    <input type="text" id="madrasah" placeholder="Nama MI..." class="w-full p-2 border rounded-lg text-sm focus:ring-1 focus:ring-green-500 outline-none">
+                    <label class="input-label">Nama Madrasah</label>
+                    <input type="text" id="madrasah" class="w-full p-2 border rounded-lg text-sm outline-green-500">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-green-700 uppercase ml-1">Tahun Ajaran</label>
-                    <input type="text" id="tahun_ajaran" placeholder="2025/2026" class="w-full p-2 border rounded-lg text-sm focus:ring-1 focus:ring-green-500 outline-none">
+                    <label class="input-label">Tahun Ajaran</label>
+                    <input type="text" id="tahun_ajaran" placeholder="2025/2026" class="w-full p-2 border rounded-lg text-sm">
                 </div>
             </div>
 
-            <!-- Baris 2: Mapel & Fase -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div class="md:col-span-1">
-                    <label class="text-[10px] font-bold text-green-700 uppercase ml-1">Mata Pelajaran</label>
-                    <input type="text" id="mapel" placeholder="Al-Qur'an Hadis" class="w-full p-2 border rounded-lg text-sm focus:ring-1 focus:ring-green-500 outline-none">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                <div>
+                    <label class="input-label">Mata Pelajaran</label>
+                    <input type="text" id="mapel" class="w-full p-2 border rounded-lg text-sm">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-green-700 uppercase ml-1">Fase / Kelas</label>
-                    <input type="text" id="fase_kelas" placeholder="Fase A / Kelas 1" class="w-full p-2 border rounded-lg text-sm focus:ring-1 focus:ring-green-500 outline-none">
+                    <label class="input-label">Fase / Kelas</label>
+                    <input type="text" id="fase_kelas" class="w-full p-2 border rounded-lg text-sm">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-green-700 uppercase ml-1">Durasi</label>
-                    <select id="pilihan_durasi" class="w-full p-2 border rounded-lg text-sm focus:ring-1 focus:ring-green-500 outline-none bg-white">
-                        <option value="1">Semester Ganjil</option>
-                        <option value="2">Semester Genap</option>
+                    <label class="input-label">Pilihan Durasi</label>
+                    <select id="pilihan_durasi" class="w-full p-2 border rounded-lg text-sm bg-white">
+                        <option value="1">Semester Ganjil Saja</option>
+                        <option value="2">Semester Genap Saja</option>
                         <option value="Tahun">Full 1 Tahun Ajaran</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Baris 3: Data Kamad & Titimangsa -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 bg-slate-50 p-4 rounded-2xl border">
                 <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-blue-700 uppercase block border-b pb-1">Kepala Madrasah</label>
-                    <input type="text" id="nama_kamad" placeholder="Nama Kepala" class="w-full p-2 border rounded-md text-sm">
-                    <input type="text" id="nip_kamad" placeholder="NIP Kamad" class="w-full p-2 border rounded-md text-sm">
+                    <label class="input-label !text-blue-700">Kepala Madrasah (Nama & NIP)</label>
+                    <input type="text" id="nama_kamad" placeholder="Nama Kamad" class="w-full p-2 border rounded text-sm mb-1">
+                    <input type="text" id="nip_kamad" placeholder="NIP Kamad" class="w-full p-2 border rounded text-sm">
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-blue-700 uppercase block border-b pb-1">Titimangsa</label>
-                    <input type="text" id="tempat_tanggal" placeholder="Kota, Tanggal..." class="w-full p-2 border rounded-md text-sm">
-                    <p class="text-[9px] text-gray-400 italic">*Contoh: Jakarta, 10 Juli 2025</p>
+                    <label class="input-label !text-blue-700">Guru & Titimangsa</label>
+                    <input type="text" id="nama_guru" placeholder="Nama Guru" class="w-full p-2 border rounded text-sm mb-1">
+                    <input type="text" id="nip_guru" placeholder="NIP Guru" class="w-full p-2 border rounded text-sm mb-1">
+                    <input type="text" id="tempat_tanggal" placeholder="Kota, Tanggal" class="w-full p-2 border rounded text-sm">
                 </div>
             </div>
 
-            <!-- Baris 4: Data Guru -->
-            <div class="bg-green-50 p-3 rounded-xl border border-green-100 grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div class="md:col-span-2">
-                    <label class="text-[10px] font-bold text-green-700 uppercase block border-b border-green-200 pb-1 mb-2">Identitas Guru Pengampu</label>
-                </div>
-                <input type="text" id="nama_guru" placeholder="Nama Guru" class="w-full p-2 border rounded-md text-sm">
-                <input type="text" id="nip_guru" placeholder="NIP Guru" class="w-full p-2 border rounded-md text-sm">
-            </div>
-
-            <!-- Baris 5: Teks CP -->
             <div>
-                <label class="text-[10px] font-bold text-red-700 uppercase ml-1">Capaian Pembelajaran (CP)</label>
-                <textarea id="cp" rows="4" class="w-full mt-1 p-3 border rounded-lg text-sm focus:ring-1 focus:ring-red-500 outline-none" placeholder="Tempel CP dari PDF KMA di sini..."></textarea>
+                <label class="input-label !text-red-600">Tempel CP (Capaian Pembelajaran)</label>
+                <textarea id="cp" rows="5" class="w-full p-3 border rounded-xl text-xs outline-red-400" placeholder="Salin CP dari PDF KMA di sini..."></textarea>
             </div>
 
-            <!-- Tombol Action -->
-            <button onclick="prosesAdmin()" id="btnProses" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg transition active:scale-95 flex items-center justify-center gap-2">
-                <span>GENERATE 5 DOKUMEN SEKARANG</span>
+            <button onclick="prosesAdmin()" id="btnProses" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-4 rounded-2xl shadow-lg transition active:scale-95">
+                GENERATE 5 DOKUMEN SEKARANG
             </button>
         </div>
 
-        <!-- AREA HASIL -->
-        <div id="hasil" class="hidden mt-8 p-4 bg-white border-2 border-dashed border-green-200 rounded-2xl">
-            <h2 class="text-sm font-bold text-green-800 mb-3 flex items-center gap-2">
-                ✅ Dokumen Berhasil Dibuat:
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2" id="linkContainer">
-                <!-- Link akan muncul di sini secara otomatis -->
-            </div>
+        <div id="hasil" class="hidden mt-8 p-5 bg-green-50 border-2 border-dashed border-green-200 rounded-3xl animate-pulse">
+            <h2 class="text-xs font-black text-green-800 mb-3 uppercase">✅ Dokumen Siap di Drive Anda:</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2" id="linkContainer"></div>
         </div>
     </div>
 
     <!-- Iklan Footer -->
-    <div class="fixed bottom-0 w-full bg-white/90 backdrop-blur-sm border-t text-center shadow-2xl z-50 py-2">
-        <span class="text-[8px] text-gray-400 block pb-1">Advertisement</span>
-        <div id="at-footer" style="transform: scale(0.85); transform-origin: bottom center;">
+    <div class="fixed bottom-0 w-full bg-white/90 backdrop-blur-md border-t text-center shadow-2xl py-2 z-50">
+        <span class="text-[8px] text-gray-400 block mb-1">ADVERTISEMENT</span>
+        <div class="scale-90 origin-bottom">
             <script src="https://pl28756503.effectivegatecpm.com/ae/78/47/ae78476ec215b28ed05d857649e2c558.js"></script>
         </div>
     </div>
@@ -136,19 +109,10 @@
         async function prosesAdmin() {
             const btn = document.getElementById('btnProses');
             const linkContainer = document.getElementById('linkContainer');
-            const hasilDiv = document.getElementById('hasil');
-
-            // Validasi sederhana
-            if(!document.getElementById('cp').value) {
-                alert("Harap tempelkan teks CP terlebih dahulu.");
-                return;
-            }
+            if(!document.getElementById('cp').value) return alert("Isi CP dulu!");
 
             btn.disabled = true;
-            btn.innerHTML = `
-                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                <span>Menyusun 5 Dokumen (± 1 Menit)...</span>
-            `;
+            btn.innerHTML = "⏳ PROSES ANALISIS AI (±60 DETIK)...";
 
             const payload = {
                 madrasah: document.getElementById('madrasah').value,
@@ -169,39 +133,21 @@
                     method: 'POST',
                     body: JSON.stringify(payload)
                 });
-                
                 const urls = await response.json();
                 
-                // Fungsi untuk menampilkan hasil secara dinamis
                 linkContainer.innerHTML = "";
-                const labels = {
-                    lk1: "📄 LK-1 Analisis CP-TP",
-                    tpatp: "📄 TP & ATP (1 Tahun)",
-                    prota: "📄 Program Tahunan",
-                    prosem: "📄 Program Semester",
-                    modul: "📄 Modul Ajar (Deep Learning)"
-                };
-
-                for (const key in urls) {
-                    if (urls[key] && !urls[key].includes("error")) {
-                        linkContainer.innerHTML += `
-                            <a href="${urls[key]}" target="_blank" class="flex items-center justify-between p-3 bg-green-50 text-green-700 rounded-lg border border-green-100 hover:bg-green-100 transition text-xs font-bold">
-                                ${labels[key] || key.toUpperCase()}
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        `;
+                const labels = { lk1: "LK-1 Analisis", tpatp: "TP & ATP", prota: "Prota", prosem: "Prosem", modul: "Modul Ajar KBC" };
+                for(let key in urls) {
+                    if(!urls[key].includes("error")) {
+                        linkContainer.innerHTML += `<a href="${urls[key]}" target="_blank" class="p-3 bg-white text-green-700 rounded-xl border border-green-200 text-[10px] font-bold shadow-sm hover:shadow-md transition">📄 ${labels[key]} 🔗</a>`;
                     }
                 }
-                
-                hasilDiv.classList.remove('hidden');
-                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-
-            } catch (e) {
-                console.error(e);
-                alert("Gagal terhubung ke server Google Apps Script. Pastikan skrip sudah di-deploy sebagai 'Anyone'.");
-            } finally {
-                btn.disabled = false;
+                document.getElementById('hasil').classList.remove('hidden');
                 btn.innerHTML = "GENERATE 5 DOKUMEN SEKARANG";
+                btn.disabled = false;
+            } catch (e) {
+                alert("Error! Pastikan Deploy Script sudah 'New Version' & 'Anyone'.");
+                btn.disabled = false;
             }
         }
     </script>
