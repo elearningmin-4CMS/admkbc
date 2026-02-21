@@ -29,8 +29,12 @@
             <p class="text-[10px] text-gray-500 italic">Otomatisasi KMA 1503/2025 - Kurikulum Berbasis Cinta</p>
         </header>
 
-        <!-- Shortcut -->
-        <div class="flex justify-center mb-6">
+        <!-- 2 Tombol Shortcut Lintas Aplikasi -->
+        <div class="flex flex-wrap justify-center gap-3 mb-6">
+            <!-- Ganti href="#" di bawah ini dengan link aplikasi Modul Ajar Anda nanti -->
+            <a href="#" class="px-5 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-blue-100 transition flex items-center gap-2">
+                📘 Generator Modul Ajar (RPP)
+            </a>
             <a href="https://appkokurikuler.vercel.app" class="px-5 py-2 bg-pink-50 text-pink-600 border border-pink-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-pink-100 transition flex items-center gap-2">
                 🚀 App Kokurikuler (P5-PPRA)
             </a>
@@ -86,8 +90,9 @@
                 <textarea id="cp" rows="5" class="w-full p-3 border rounded-xl text-xs outline-red-400" placeholder="Salin CP dari PDF KMA di sini..."></textarea>
             </div>
 
+            <!-- Tombol disesuaikan menjadi 4 Dokumen -->
             <button onclick="prosesAdmin()" id="btnProses" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-4 rounded-2xl shadow-lg transition active:scale-95">
-                GENERATE 5 DOKUMEN SEKARANG
+                GENERATE 4 DOKUMEN SEKARANG
             </button>
         </div>
 
@@ -113,10 +118,14 @@ async function prosesAdmin() {
     const linkContainer = document.getElementById('linkContainer');
     const hasilDiv = document.getElementById('hasil');
     
-    if(!document.getElementById('cp').value) return alert("Mohon tempelkan CP!");
+    if(!document.getElementById('cp').value) {
+        alert("Mohon tempelkan Teks Capaian Pembelajaran (CP) terlebih dahulu!");
+        document.getElementById('cp').focus();
+        return;
+    }
 
     btn.disabled = true;
-    btn.innerHTML = `<span class="animate-pulse">⏳ SEDANG MENYUSUN 5 DOKUMEN...</span>`;
+    btn.innerHTML = `<span class="animate-pulse">⏳ SEDANG MEMPROSES AI & MENYUSUN 4 DOKUMEN...</span>`;
     hasilDiv.classList.add('hidden');
 
     const payload = {
@@ -134,65 +143,80 @@ async function prosesAdmin() {
     };
 
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwxiHYTHfGWH7EjLIW-YWbLAUGop7r6P1HQe6-EcvazlDzSbuihJHlsHPFP28KliY94/exec', {
+        // PERBAIKAN CORS UNTUK VERCEL
+        const response = await fetch('https://script.google.com/macros/s/AKfycby4hl_-PzxfHzVUuITGYrEW65hVjZe6j_ghEY5d9IDQIA-lAcoaC7rVIPVXHsmcKlBM/exec', {
             method: 'POST',
-            body: JSON.stringify(payload)
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8",
+            },
+            body: JSON.stringify(payload),
+            redirect: "follow"
         });
         
         const urls = await response.json();
-        currentFiles = urls; // Simpan ke variabel global
-
-        if (Object.keys(urls).length === 0 || urls.error) {
-            throw new Error(urls.error || "AI gagal memproses data.");
+        
+        if (urls.error) {
+            throw new Error(urls.error);
         }
 
+        currentFiles = urls; 
         linkContainer.innerHTML = "";
         
-        // 1. Tambahkan Tombol Download Semua (DOCX)
+        // 1. Tambahkan Tombol Download Semua (DOCX) disesuaikan 4 dokumen
         linkContainer.innerHTML += `
-            <button onclick="downloadSemua()" class="col-span-full mb-4 p-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 shadow-lg flex items-center justify-center gap-2">
+            <button onclick="downloadSemua()" class="col-span-full mb-4 p-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 shadow-lg flex items-center justify-center gap-2 transition active:scale-95">
                 📥 DOWNLOAD SEMUA SEKALIGUS (.DOCX)
             </button>
         `;
 
-        // 2. Tampilkan daftar link individual
-        const labels = { lk1: "LK-1 Analisis", tpatp: "TP & ATP", prota: "Prota", prosem: "Prosem", modul: "Modul Ajar" };
+        // 2. Tampilkan daftar link individual (Label Modul Ajar dihapus)
+        const labels = { lk1: "LK-1 Analisis CP", tpatp: "TP & ATP", prota: "Program Tahunan", prosem: "Program Semester" };
         for (const key in urls) {
-            linkContainer.innerHTML += `
-                <a href="${urls[key]}" target="_blank" class="p-3 bg-white text-green-700 rounded-lg border border-green-200 text-[10px] font-bold shadow-sm hover:shadow-md flex justify-between items-center transition uppercase">
-                    ${labels[key]} <span>🔗</span>
-                </a>
-            `;
+            if(urls[key]) {
+                linkContainer.innerHTML += `
+                    <a href="${urls[key]}" target="_blank" class="p-3 bg-white text-green-700 rounded-lg border border-green-200 text-[10px] font-bold shadow-sm hover:shadow-md hover:bg-green-50 flex justify-between items-center transition uppercase">
+                        ${labels[key] || key} <span class="text-sm">🔗</span>
+                    </a>
+                `;
+            }
         }
         
         hasilDiv.classList.remove('hidden');
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 
     } catch (e) {
-        alert("Gagal! AI kemungkinan sedang sibuk atau ID Folder Anda salah. Cek konsol browser.");
+        alert("Gagal memproses dokumen!\n\nPesan Error: " + e.message);
         console.error(e);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = "GENERATE 5 DOKUMEN SEKARANG";
+        btn.innerHTML = "GENERATE 4 DOKUMEN SEKARANG";
     }
 }
 
-// Fungsi Sakti untuk Download Semua
+// PERBAIKAN FITUR DOWNLOAD: Gunakan jeda (delay) agar tidak diblokir browser
 function downloadSemua() {
-    alert("Browser akan mendownload 5 file. Jika muncul blokir 'Multiple Downloads', klik ALLOW/IZINKAN.");
+    alert("Browser akan mendownload 4 file berurutan. Jika muncul peringatan 'Multiple Downloads', klik ALLOW/IZINKAN.");
     
+    let delay = 0; 
+
     for (const key in currentFiles) {
         const originalUrl = currentFiles[key];
-        // Mengubah link edit Google Docs menjadi link download langsung Word (.docx)
+        if (!originalUrl) continue;
+
         const downloadUrl = originalUrl.replace('/edit?usp=drivesdk', '/export?format=docx')
                                      .replace('/edit', '/export?format=docx');
         
-        const link = document.createElement('a');
-        link.href = downloadUrl;
-        link.setAttribute('download', ''); // Trigger download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        // Jeda 1 detik (1000ms) antar file agar lolos anti-spam browser
+        setTimeout(() => {
+            const link = document.createElement('a');
+            link.href = downloadUrl;
+            link.setAttribute('download', `${key}.docx`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }, delay);
+
+        delay += 1000; 
     }
 }
     </script>
