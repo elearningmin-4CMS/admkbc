@@ -31,11 +31,12 @@
 
         <!-- 3 Tombol Shortcut Eksternal -->
         <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6">
-            <!-- TAUTAN PDF CP MI (Buka di Tab Baru) -->
+            <!-- Ganti href="#" dengan Link Google Drive PDF CP Anda -->
             <a href="#" target="_blank" class="px-5 py-2 bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-yellow-100 transition flex items-center gap-2">
                 📄 Buka Daftar CP MI 2025
             </a>
             
+            <!-- Ganti href="#" dengan Link Vercel Modul Ajar Anda nanti -->
             <a href="#" class="px-5 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-blue-100 transition flex items-center gap-2">
                 📘 Generator Modul Ajar (RPP)
             </a>
@@ -146,11 +147,9 @@ async function prosesAdmin() {
     };
 
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxCHIy7iXW7RSsPazYfKJ2JNyOmfS3VdWOT2dkcECshO3PPBS3oos4rGbtCAHWaXFIh/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbwxiHYTHfGWH7EjLIW-YWbLAUGop7r6P1HQe6-EcvazlDzSbuihJHlsHPFP28KliY94/exec', {
             method: 'POST',
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8",
-            },
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload),
             redirect: "follow"
         });
@@ -164,14 +163,12 @@ async function prosesAdmin() {
         currentFiles = urls; 
         linkContainer.innerHTML = "";
         
-        // 1. Tambahkan Tombol Download Semua
         linkContainer.innerHTML += `
             <button onclick="downloadSemua()" class="col-span-full mb-4 p-4 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 shadow-lg flex items-center justify-center gap-2 transition active:scale-95">
                 📥 DOWNLOAD SEMUA SEKALIGUS (.DOCX)
             </button>
         `;
 
-        // 2. Tampilkan daftar link individual
         const labels = { lk1: "LK-1 Analisis CP", tpatp: "TP & ATP", prota: "Program Tahunan", prosem: "Program Semester" };
         for (const key in urls) {
             if(urls[key]) {
@@ -195,30 +192,47 @@ async function prosesAdmin() {
     }
 }
 
-// Fungsi jeda download (Anti-Blokir Browser)
+// === FIX: LOGIKA DOWNLOAD SEMUA YANG LEBIH KUAT ===
 function downloadSemua() {
-    alert("Browser akan mendownload 4 file berurutan. Jika muncul peringatan 'Multiple Downloads', klik ALLOW/IZINKAN.");
+    // 1. Peringatan Dini kepada User
+    alert("⚠️ PENTING:\n\nBrowser Anda mungkin akan memblokir download file ke-2, ke-3, dst.\n\nJika hanya 1 file yang terdownload, LIHAT POJOK KANAN ATAS browser (Address Bar), cari ikon 'Pop-up blocked' (kotak disilang merah), lalu pilih 'Always allow...' dan coba download lagi.");
+
+    const keys = Object.keys(currentFiles);
+    if (keys.length === 0) return;
+
+    let i = 0;
     
-    let delay = 0; 
+    // Gunakan setInterval agar lebih stabil daripada loop for
+    const intervalId = setInterval(() => {
+        if (i >= keys.length) {
+            clearInterval(intervalId);
+            return;
+        }
 
-    for (const key in currentFiles) {
+        const key = keys[i];
         const originalUrl = currentFiles[key];
-        if (!originalUrl) continue;
 
-        const downloadUrl = originalUrl.replace('/edit?usp=drivesdk', '/export?format=docx')
-                                     .replace('/edit', '/export?format=docx');
-        
-        setTimeout(() => {
+        if (originalUrl) {
+            // Ubah link edit menjadi link export docx
+            const downloadUrl = originalUrl.replace('/edit?usp=drivesdk', '/export?format=docx')
+                                         .replace('/edit', '/export?format=docx');
+            
+            // Buat elemen link tersembunyi
             const link = document.createElement('a');
             link.href = downloadUrl;
-            link.setAttribute('download', `${key}.docx`);
+            link.target = "_blank"; // Membuka di tab baru kadang membantu bypass blocker
+            link.setAttribute('download', `${key}_${Date.now()}.docx`);
             document.body.appendChild(link);
+            
+            // Klik otomatis
             link.click();
+            
+            // Bersihkan
             document.body.removeChild(link);
-        }, delay);
+        }
 
-        delay += 1200; // 1.2 detik agar lebih aman
-    }
+        i++;
+    }, 1500); // Jeda 1.5 Detik per file (Waktu aman agar tidak dianggap spam)
 }
     </script>
 </body>
