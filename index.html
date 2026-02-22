@@ -29,18 +29,14 @@
             <p class="text-[10px] text-gray-500 italic">Otomatisasi KMA 1503/2025 - Kurikulum Berbasis Cinta</p>
         </header>
 
-        <!-- 3 Tombol Shortcut Eksternal -->
+        <!-- Shortcut -->
         <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6">
-            <!-- Ganti href="#" dengan Link Google Drive PDF CP Anda -->
             <a href="#" target="_blank" class="px-5 py-2 bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-yellow-100 transition flex items-center gap-2">
                 📄 Buka Daftar CP MI 2025
             </a>
-            
-            <!-- Ganti href="#" dengan Link Vercel Modul Ajar Anda nanti -->
             <a href="#" class="px-5 py-2 bg-blue-50 text-blue-600 border border-blue-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-blue-100 transition flex items-center gap-2">
                 📘 Generator Modul Ajar (RPP)
             </a>
-            
             <a href="https://appkokurikuler.vercel.app" class="px-5 py-2 bg-pink-50 text-pink-600 border border-pink-200 rounded-full text-[10px] font-bold shadow-sm hover:bg-pink-100 transition flex items-center gap-2">
                 🚀 App Kokurikuler (P5-PPRA)
             </a>
@@ -65,7 +61,7 @@
                 </div>
                 <div>
                     <label class="input-label">Fase / Kelas</label>
-                    <input type="text" id="fase_kelas" placeholder="Fase B / Kelas 4" class="w-full p-2 border rounded-lg text-sm outline-green-500">
+                    <input type="text" id="fase_kelas" placeholder="Fase B / Kelas 4" class="w-full p-2 border rounded-lg text-sm">
                 </div>
                 <div>
                     <label class="input-label">Pilihan Durasi</label>
@@ -91,8 +87,9 @@
             </div>
 
             <div>
-                <label class="input-label !text-red-600">Tempel CP (Capaian Pembelajaran)</label>
-                <textarea id="cp" rows="5" class="w-full p-3 border rounded-xl text-xs outline-red-400" placeholder="Salin CP dari PDF KMA di sini..."></textarea>
+                <label class="input-label !text-red-600">Tempel CP (Salin dari PDF dengan format [Elemen] Deskripsi)</label>
+                <textarea id="cp" rows="5" class="w-full p-3 border rounded-xl text-xs outline-red-400" 
+                placeholder="Contoh: [Pancasila] Mengidentifikasi makna sila... [Bhinneka Tunggal Ika] Mengenal identitas..."></textarea>
             </div>
 
             <button onclick="prosesAdmin()" id="btnProses" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-4 rounded-2xl shadow-lg transition active:scale-95">
@@ -147,7 +144,8 @@ async function prosesAdmin() {
     };
 
     try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbwxiHYTHfGWH7EjLIW-YWbLAUGop7r6P1HQe6-EcvazlDzSbuihJHlsHPFP28KliY94/exec', {
+        // GANTI URL DI BAWAH INI DENGAN URL WEB APP BARU DARI HASIL DEPLOYMENT ANDA
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzCF0zqQYVzW0dhWxIXH3G1ABdou1vUvebcNmibpKjBnTif5YFMrkCNf5vWujHhZTUi/exec', {
             method: 'POST',
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify(payload),
@@ -184,7 +182,7 @@ async function prosesAdmin() {
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
 
     } catch (e) {
-        alert("Gagal memproses dokumen!\n\nPesan Error: " + e.message);
+        alert("Gagal memproses dokumen!\n\nKemungkinan URL Script belum diperbarui setelah Deploy.\n\nPesan Error: " + e.message);
         console.error(e);
     } finally {
         btn.disabled = false;
@@ -192,47 +190,30 @@ async function prosesAdmin() {
     }
 }
 
-// === FIX: LOGIKA DOWNLOAD SEMUA YANG LEBIH KUAT ===
 function downloadSemua() {
-    // 1. Peringatan Dini kepada User
-    alert("⚠️ PENTING:\n\nBrowser Anda mungkin akan memblokir download file ke-2, ke-3, dst.\n\nJika hanya 1 file yang terdownload, LIHAT POJOK KANAN ATAS browser (Address Bar), cari ikon 'Pop-up blocked' (kotak disilang merah), lalu pilih 'Always allow...' dan coba download lagi.");
-
-    const keys = Object.keys(currentFiles);
-    if (keys.length === 0) return;
-
-    let i = 0;
+    alert("Browser akan mendownload 4 file berurutan. Jika muncul peringatan 'Multiple Downloads', klik ALLOW/IZINKAN.");
     
-    // Gunakan setInterval agar lebih stabil daripada loop for
-    const intervalId = setInterval(() => {
-        if (i >= keys.length) {
-            clearInterval(intervalId);
-            return;
-        }
-
-        const key = keys[i];
-        const originalUrl = currentFiles[key];
-
-        if (originalUrl) {
-            // Ubah link edit menjadi link export docx
+    let delay = 0; 
+    const keys = Object.keys(currentFiles);
+    
+    keys.forEach((key, index) => {
+         const originalUrl = currentFiles[key];
+         if (originalUrl) {
             const downloadUrl = originalUrl.replace('/edit?usp=drivesdk', '/export?format=docx')
                                          .replace('/edit', '/export?format=docx');
             
-            // Buat elemen link tersembunyi
-            const link = document.createElement('a');
-            link.href = downloadUrl;
-            link.target = "_blank"; // Membuka di tab baru kadang membantu bypass blocker
-            link.setAttribute('download', `${key}_${Date.now()}.docx`);
-            document.body.appendChild(link);
-            
-            // Klik otomatis
-            link.click();
-            
-            // Bersihkan
-            document.body.removeChild(link);
-        }
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.setAttribute('download', `${key}.docx`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }, delay);
 
-        i++;
-    }, 1500); // Jeda 1.5 Detik per file (Waktu aman agar tidak dianggap spam)
+            delay += 1500; 
+         }
+    });
 }
     </script>
 </body>
