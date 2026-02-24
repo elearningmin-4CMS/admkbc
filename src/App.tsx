@@ -12,7 +12,7 @@ export default function App() {
       title: "Buka Daftar CP MI 2025",
       icon: <FileText className="w-6 h-6" />,
       description: "Capaian Pembelajaran Madrasah Ibtidaiyah Terbaru",
-      href: "#", // Placeholder for actual link
+      href: "https://docs.google.com/document/d/1NUqYKYl4WxkDi-MgZAiL9pPerbJDgiz2XnEHJa_6oJo/edit?usp=sharing", // Placeholder for actual link
       external: true,
       color: "bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100",
     },
@@ -20,7 +20,7 @@ export default function App() {
       title: "Buka Daftar TP Poin dari CP MI 2025",
       icon: <FileText className="w-6 h-6" />,
       description: "Tujuan Pembelajaran yang diderivasi dari CP",
-      href: "#", // Placeholder for actual link
+      href: "https://docs.google.com/document/d/12JL9DBPyoM7Ac0JjYXciBXtn9bVCEubNm0saPCsN7nc/edit?usp=sharing", // Placeholder for actual link
       external: true,
       color: "bg-blue-50 text-blue-700 border-blue-100 hover:bg-blue-100",
     },
@@ -28,7 +28,7 @@ export default function App() {
       title: "Analisator CP-TP Insersi KBC",
       icon: <Search className="w-6 h-6" />,
       description: "Analisis CP-TP dengan Integrasi Kurikulum Berbasis Cinta",
-      href: "/analisator",
+      href: "https://analisis-cp-tp-insersi-kbc-mi.vercel.app/",
       external: false,
       color: "bg-rose-50 text-rose-700 border-rose-100 hover:bg-rose-100",
     },
@@ -36,7 +36,7 @@ export default function App() {
       title: "Generator Modul Ajar (RPP)",
       icon: <BookOpen className="w-6 h-6" />,
       description: "Pembuatan Rencana Pelaksanaan Pembelajaran Otomatis",
-      href: "/generator",
+      href: "https://generator-rpp-kkg.vercel.app/",
       external: false,
       color: "bg-amber-50 text-amber-700 border-amber-100 hover:bg-amber-100",
     },
@@ -67,7 +67,7 @@ export default function App() {
             />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-emerald-800 mb-2 tracking-tight">
-            Administrasi Kurikulum MI
+            Administrasi Kurikulum
           </h1>
           <p className="text-lg md:text-xl text-emerald-700 font-medium">
             Otomatisasi KMA 1503/2025 — Kurikulum Berbasis Cinta
